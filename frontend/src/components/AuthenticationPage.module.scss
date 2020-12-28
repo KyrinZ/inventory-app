@@ -1,0 +1,24 @@
+.pageContainer {
+  display: flex;
+  width: 100%;
+}
+.formSide {
+  flex: 1;
+}
+
+.formInner {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.logo {
+}
+
+.imageSide {
+  max-height: 100vh;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+  flex: 1;
+}
