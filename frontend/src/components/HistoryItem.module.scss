@@ -1,0 +1,20 @@
+.historyItemContainer {
+  width: 100%;
+  background-color: #ededed;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  p {
+    color: #b2b2b2;
+    margin: 0 1rem;
+  }
+}
+
+.icon {
+  background-color: #a7a7a7;
+  padding: 1rem;
+  max-width: 4rem;
+  img {
+    width: 100%;
+  }
+}

@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 
 // Styles
-import styles from "./SignUpForm.module.scss";
+import styles from "./AuthenticationForm.module.scss";
 
 import { signUpSchema } from "./authentication_schema";
 
@@ -39,7 +39,7 @@ export default function SignUpForm({ changeFormType }) {
         />
 
         {formik.touched.username && formik.errors.username ? (
-          <div>{formik.errors.username}</div>
+          <div className={styles.errorMsg}>{formik.errors.username}</div>
         ) : null}
       </div>
 
@@ -54,7 +54,7 @@ export default function SignUpForm({ changeFormType }) {
         />
 
         {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
+          <div className={styles.errorMsg}>{formik.errors.password}</div>
         ) : null}
       </div>
 
@@ -69,7 +69,7 @@ export default function SignUpForm({ changeFormType }) {
         />
 
         {formik.touched.confirmation && formik.errors.confirmation ? (
-          <div>{formik.errors.confirmation}</div>
+          <div className={styles.errorMsg}>{formik.errors.confirmation}</div>
         ) : null}
       </div>
       <button>Sign up</button>

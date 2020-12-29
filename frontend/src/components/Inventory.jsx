@@ -1,4 +1,8 @@
+// Components
 import InventoryItem from "./InventoryItem";
+
+// Styles
+import styles from "./Inventory.module.scss";
 
 const username = "TestUser";
 const productItems = [
@@ -25,26 +29,26 @@ const productItems = [
 export default function Inventory() {
   return (
     <div>
-      <div>
+      <div className={styles.headingContainer}>
         {/* Title */}
         <div>
-          <h1>{username} Inventory</h1>
+          <h1>{username}'s inventory</h1>
         </div>
 
         {/* Search */}
-        <div>
+        <div className={styles.search}>
           <input type="text" placeholder="Search Item..." />
         </div>
       </div>
 
-      <div>
+      <div className={styles.buttons}>
         <button>Add Item</button>
         <button>Download Report</button>
       </div>
 
-      <div>
+      <div className={styles.productsContainer}>
         {/* Table Head */}
-        <div>
+        <div className={styles.productsHeading}>
           <div>
             <div>No.</div>
           </div>
@@ -61,7 +65,6 @@ export default function Inventory() {
             <div>Quantity</div>
           </div>
         </div>
-
         {productItems.length > 0
           ? productItems.map((items, index) => (
               <InventoryItem key={index} productNumber={index + 1} {...items} />

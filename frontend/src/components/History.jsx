@@ -1,4 +1,8 @@
+// Components
 import HistoryItem from "./HistoryItem";
+
+// Styles
+import styles from "./History.module.scss";
 
 const username = "TestUser";
 const histories = [
@@ -8,13 +12,13 @@ const histories = [
 ];
 export default function History() {
   return (
-    <div>
+    <div className={styles.historyContainer}>
       {/* Title */}
-      <div>
-        <h1>{username} History</h1>
+      <div className={styles.heading}>
+        <h1>{username}'s histories</h1>
       </div>
 
-      <div>
+      <div className={styles.histories}>
         {histories.length > 0
           ? histories.map((history, index) => (
               <HistoryItem key={index} historyText={history} />

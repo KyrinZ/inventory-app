@@ -4,7 +4,7 @@ import AuthenticationPage from "./AuthenticationPage";
 const userData = {
   userId: 2,
   username: "TestUser",
-  isUserLoggedIn: false,
+  isUserLoggedIn: true,
 };
 
 export default function EntryPoint() {

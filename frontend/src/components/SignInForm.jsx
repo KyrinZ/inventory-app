@@ -1,5 +1,8 @@
 import { useFormik } from "formik";
 
+// Styles
+import styles from "./AuthenticationForm.module.scss";
+
 import { signInSchema } from "./authentication_schema";
 
 export default function SignInForm({ changeFormType }) {
@@ -19,12 +22,12 @@ export default function SignInForm({ changeFormType }) {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form className={styles.form} onSubmit={formik.handleSubmit}>
       <div>
         <h1>Sign in</h1>
       </div>
 
-      <div>
+      <div className={styles.formGroup}>
         <label htmlFor="username">Username</label>
         <input
           onChange={formik.handleChange}
@@ -35,11 +38,11 @@ export default function SignInForm({ changeFormType }) {
         />
 
         {formik.touched.username && formik.errors.username ? (
-          <div>{formik.errors.username}</div>
+          <div className={styles.errorMsg}>{formik.errors.username}</div>
         ) : null}
       </div>
 
-      <div>
+      <div className={styles.formGroup}>
         <label htmlFor="password">Password</label>
         <input
           onChange={formik.handleChange}
@@ -50,7 +53,7 @@ export default function SignInForm({ changeFormType }) {
         />
 
         {formik.touched.password && formik.errors.password ? (
-          <div>{formik.errors.password}</div>
+          <div className={styles.errorMsg}>{formik.errors.password}</div>
         ) : null}
       </div>
       <button>Sign in</button>
