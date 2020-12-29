@@ -1,3 +1,6 @@
+import { Redirect, BrowserRouter as Router } from "react-router-dom";
+
+// Components
 import InventoryPage from "./InventoryPage";
 import AuthenticationPage from "./AuthenticationPage";
 
@@ -9,8 +12,6 @@ const userData = {
 
 export default function EntryPoint() {
   return (
-    <div>
-      {userData.isUserLoggedIn ? <InventoryPage /> : <AuthenticationPage />}
-    </div>
+    <>{userData.isUserLoggedIn ? <InventoryPage /> : <AuthenticationPage />}</>
   );
 }

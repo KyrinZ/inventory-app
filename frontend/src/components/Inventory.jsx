@@ -1,5 +1,8 @@
+import { useState } from "react";
+
 // Components
 import InventoryItem from "./InventoryItem";
+import AddProductForm from "./AddProductForm";
 
 // Styles
 import styles from "./Inventory.module.scss";
@@ -27,8 +30,14 @@ const productItems = [
 ];
 
 export default function Inventory() {
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
+
   return (
     <div>
+      {isAddFormOpen ? (
+        <AddProductForm setIsAddFormOpen={setIsAddFormOpen} />
+      ) : null}
+
       <div className={styles.headingContainer}>
         {/* Title */}
         <div>
@@ -42,7 +51,7 @@ export default function Inventory() {
       </div>
 
       <div className={styles.buttons}>
-        <button>Add Item</button>
+        <button onClick={() => setIsAddFormOpen(true)}>Add Item</button>
         <button>Download Report</button>
       </div>
 

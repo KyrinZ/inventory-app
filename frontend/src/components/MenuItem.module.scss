@@ -1,4 +1,5 @@
 .menuItem {
+  cursor: pointer;
   text-align: center;
   margin: 1rem 0;
   padding: 1rem;
@@ -6,5 +7,9 @@
   font-size: 0.9rem;
   img {
     max-width: 4rem;
+  }
+
+  &:hover {
+    background-color: #dddddd;
   }
 }

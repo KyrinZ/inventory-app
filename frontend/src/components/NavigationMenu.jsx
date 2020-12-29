@@ -12,10 +12,10 @@ export default function NavigationMenu() {
   return (
     <nav className={styles.nav}>
       <div>
-        <MenuItem image={inventoryIcon} alt="inventoryIcon">
+        <MenuItem path="/inventory" image={inventoryIcon} alt="inventoryIcon">
           Inventory
         </MenuItem>
-        <MenuItem image={historyIcon} alt="historyIcon">
+        <MenuItem path="/history" image={historyIcon} alt="historyIcon">
           History
         </MenuItem>
       </div>
