@@ -1,8 +1,11 @@
 import { useFormik } from "formik";
+import axios from "axios";
 
 import styles from "./AddProductForm.module.scss";
 
 import { addProductSchema } from "./authentication_schema";
+
+import instance from "./axios";
 
 export default function AddProductForm({ setIsAddFormOpen }) {
   const formik = useFormik({
@@ -13,7 +16,15 @@ export default function AddProductForm({ setIsAddFormOpen }) {
     },
     validationSchema: addProductSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      const { productId, productName, quantity } = values;
+
+      instance
+        .post("add/", { productId, productName, quantity })
+        .then((res) => {
+          alert(res);
+          setIsAddFormOpen(false);
+        })
+        .catch((err) => console.log(err));
     },
   });
 
