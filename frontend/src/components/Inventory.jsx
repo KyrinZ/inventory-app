@@ -1,41 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Components
 import InventoryItem from "./InventoryItem";
 import AddProductForm from "./AddProductForm";
+import Search from "./Search";
 
 // Styles
 import styles from "./Inventory.module.scss";
 
+import instance from "./axios";
+
 const username = "TestUser";
-const productItems = [
-  {
-    productId: 2134,
-    productName: "Chair",
-    dateAdded: "24 December",
-    quantity: 30,
-  },
-  {
-    productId: 342,
-    productName: "Table",
-    dateAdded: "25 December",
-    quantity: 13,
-  },
-  {
-    productId: 1323,
-    productName: "Guitar",
-    dateAdded: "30 November",
-    quantity: 5,
-  },
-];
 
 export default function Inventory() {
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
+  const [productItems, setProductItems] = useState({
+    isItemsArrived: false,
+    items: [],
+  });
+
+  const loadProducts = useCallback((search = "") => {
+    instance
+      .get(`product/?search=${search}`)
+      .then(({ data }) => {
+        setProductItems({ isItemsArrived: true, items: data });
+      })
+      .catch((err) => {
+        setProductItems({ isItemsArrived: true, items: [] });
+      });
+  }, []);
+
+  useEffect(() => {
+    loadProducts();
+  }, [loadProducts]);
 
   return (
     <div>
       {isAddFormOpen ? (
-        <AddProductForm setIsAddFormOpen={setIsAddFormOpen} />
+        <AddProductForm
+          loadProducts={loadProducts}
+          setIsAddFormOpen={setIsAddFormOpen}
+        />
       ) : null}
 
       <div className={styles.headingContainer}>
@@ -45,9 +50,7 @@ export default function Inventory() {
         </div>
 
         {/* Search */}
-        <div className={styles.search}>
-          <input type="text" placeholder="Search Item..." />
-        </div>
+        <Search loadProducts={loadProducts} />
       </div>
 
       <div className={styles.buttons}>
@@ -74,11 +77,22 @@ export default function Inventory() {
             <div>Quantity</div>
           </div>
         </div>
-        {productItems.length > 0
-          ? productItems.map((items, index) => (
-              <InventoryItem key={index} productNumber={index + 1} {...items} />
+        {productItems.isItemsArrived ? (
+          productItems.items.length > 0 ? (
+            productItems.items.map((items, index) => (
+              <InventoryItem
+                key={index}
+                productNumber={index + 1}
+                loadProducts={loadProducts}
+                {...items}
+              />
             ))
-          : "No items added"}
+          ) : (
+            <p>No items added</p>
+          )
+        ) : (
+          <p>Loading</p>
+        )}
       </div>
     </div>
   );

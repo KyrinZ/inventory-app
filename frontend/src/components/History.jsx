@@ -1,16 +1,34 @@
+import { useState, useEffect } from "react";
+
 // Components
 import HistoryItem from "./HistoryItem";
 
 // Styles
 import styles from "./History.module.scss";
 
+import instance from "./axios";
+
 const username = "TestUser";
-const histories = [
-  "Chair was added on 24 July, 14:21.",
-  "Table was deleted on 24 July, 14:21.",
-  "Guiter was updated on 24 July, 14:21.",
-];
 export default function History() {
+  const [historyItems, setHistoryItems] = useState({
+    isItemsArrived: false,
+    items: [],
+  });
+
+  const loadHistory = () => {
+    instance
+      .get("history/")
+      .then(({ data }) => {
+        setHistoryItems({ isItemsArrived: true, items: data });
+      })
+      .catch((err) => {
+        setHistoryItems({ isItemsArrived: true, items: [] });
+      });
+  };
+  useEffect(() => {
+    loadHistory();
+  }, []);
+
   return (
     <div className={styles.historyContainer}>
       {/* Title */}
@@ -19,11 +37,19 @@ export default function History() {
       </div>
 
       <div className={styles.histories}>
-        {histories.length > 0
-          ? histories.map((history, index) => (
-              <HistoryItem key={index} historyText={history} />
+        {historyItems.isItemsArrived ? (
+          historyItems.items.length > 0 ? (
+            historyItems.items.map((history, index) => (
+              <HistoryItem key={index}>
+                {history.productName} was {history.updateType} on {history.date}
+              </HistoryItem>
             ))
-          : "No activities occurred"}
+          ) : (
+            <p>No activities occurred</p>
+          )
+        ) : (
+          <p>Loading</p>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-import axios from "axios";
 
 import styles from "./AddProductForm.module.scss";
 
@@ -7,7 +6,7 @@ import { addProductSchema } from "./authentication_schema";
 
 import instance from "./axios";
 
-export default function AddProductForm({ setIsAddFormOpen }) {
+export default function AddProductForm({ setIsAddFormOpen, loadProducts }) {
   const formik = useFormik({
     initialValues: {
       productId: "",
@@ -19,10 +18,10 @@ export default function AddProductForm({ setIsAddFormOpen }) {
       const { productId, productName, quantity } = values;
 
       instance
-        .post("add/", { productId, productName, quantity })
+        .post("product/add/", { productId, productName, quantity })
         .then((res) => {
-          alert(res);
           setIsAddFormOpen(false);
+          loadProducts();
         })
         .catch((err) => console.log(err));
     },
@@ -97,7 +96,7 @@ export default function AddProductForm({ setIsAddFormOpen }) {
             <div className={styles.errorMsg}>{formik.errors.quantity}</div>
           ) : null}
         </div>
-        <button>Add Item</button>
+        <button type="submit">Add Item</button>
       </form>
     </div>
   );

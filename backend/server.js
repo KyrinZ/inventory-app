@@ -18,8 +18,10 @@ connection.once("open", () => {
 });
 
 const productRoute = require("./routes/product");
+const historyRoute = require("./routes/history");
 
 app.use("/product", productRoute);
+app.use("/history", historyRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
