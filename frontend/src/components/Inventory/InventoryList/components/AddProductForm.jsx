@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
 
-import styles from "./AddProductForm.module.scss";
+// Styles
+import styles from "./styles/AddProductForm.module.scss";
 
-import { addProductSchema } from "./authentication_schema";
-
-import instance from "./axios";
+// Utilities
+import { axios, addProductSchema } from "../../../utilities";
 
 export default function AddProductForm({ setIsAddFormOpen, loadProducts }) {
   const formik = useFormik({
@@ -17,7 +17,7 @@ export default function AddProductForm({ setIsAddFormOpen, loadProducts }) {
     onSubmit: (values) => {
       const { productId, productName, quantity } = values;
 
-      instance
+      axios
         .post("product/add/", { productId, productName, quantity })
         .then((res) => {
           setIsAddFormOpen(false);

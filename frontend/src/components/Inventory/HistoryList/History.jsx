@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import HistoryItem from "./HistoryItem";
 
 // Styles
-import styles from "./History.module.scss";
+import styles from "./styles/History.module.scss";
 
-import instance from "./axios";
+// Utilities
+import instance from "../../utilities/axios";
 
 const username = "TestUser";
+
 export default function History() {
   const [historyItems, setHistoryItems] = useState({
     isItemsArrived: false,

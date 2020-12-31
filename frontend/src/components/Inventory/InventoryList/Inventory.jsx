@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 
 // Components
-import InventoryItem from "./InventoryItem";
-import AddProductForm from "./AddProductForm";
-import Search from "./Search";
+import { AddProductForm, InventoryItem, Search } from "./components";
 
 // Styles
 import styles from "./Inventory.module.scss";
 
-import instance from "./axios";
+// Utilities
+import { axios } from "../../utilities";
 
 const username = "TestUser";
 
@@ -20,7 +19,7 @@ export default function Inventory() {
   });
 
   const loadProducts = useCallback((search = "") => {
-    instance
+    axios
       .get(`product/?search=${search}`)
       .then(({ data }) => {
         setProductItems({ isItemsArrived: true, items: data });

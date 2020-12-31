@@ -1,16 +1,15 @@
-// import warehouseImg from "../assets/warehouse.jpg";
 import { useState } from "react";
 
 // Components
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
+import { SignInForm, SignUpForm } from "./Forms";
 
 // Styles
 import styles from "./AuthenticationPage.module.scss";
 
-import wareHouseIma from "../assets/warehouse.jpg";
+// Utilities
+import { warehouseImg } from "../../assets";
 
-export default function Authentication() {
+export default function Authentication({ logIn }) {
   const [formType, setFormType] = useState("signUp");
 
   const changeFormType = (type) => {
@@ -27,15 +26,15 @@ export default function Authentication() {
 
           {/* Forms */}
           {formType === "signIn" ? (
-            <SignInForm changeFormType={changeFormType} />
+            <SignInForm logIn={logIn} changeFormType={changeFormType} />
           ) : formType === "signUp" ? (
-            <SignUpForm changeFormType={changeFormType} />
+            <SignUpForm logIn={logIn} changeFormType={changeFormType} />
           ) : null}
         </div>
       </div>
       {/* Side Image */}
       <div className={styles.imageSide}>
-        <img src={wareHouseIma} alt="Warehouse" />
+        <img src={warehouseImg} alt="Warehouse" />
       </div>
     </div>
   );

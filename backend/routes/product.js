@@ -1,18 +1,22 @@
 const router = require("express").Router();
+var jwt = require("jsonwebtoken");
 
 let Product = require("../models/product.model");
 let History = require("../models/history.model");
+const verify = require("../verifyToken");
 
-router.route("/").get((req, res) => {
+router.get("/", verify, (req, res) => {
+  const user = jwt.verify(req.header("auth-token"), process.env.TOKEN_SECRET);
+
   if (req.query.search === "") {
-    Product.find()
+    Product.find({ userId: user.userId })
       .then((products) => {
         res.json(products);
       })
       .catch((err) => res.status(400).json("Error " + err));
   } else {
     let search = new RegExp(req.query.search, "g");
-    Product.find({ productName: search }, "productName productId")
+    Product.find({ userId: user.userId, productName: search })
       .then((products) => {
         res.json(products);
       })
@@ -20,22 +24,34 @@ router.route("/").get((req, res) => {
   }
 });
 
-router.route("/add").post((req, res) => {
+router.post("/add", verify, (req, res) => {
   const { productId, productName, quantity } = req.body;
+  const user = jwt.verify(req.header("auth-token"), process.env.TOKEN_SECRET);
 
-  const newProduct = new Product({ productId, productName, quantity });
+  const newProduct = new Product({
+    userId: user.userId,
+    productId,
+    productName,
+    quantity,
+  });
   newProduct
     .save()
     .then(() => {
-      const newHistory = new History({ productName, updateType: "added" });
+      const newHistory = new History({
+        userId: user.userId,
+        productName,
+        updateType: "added",
+      });
       newHistory.save();
       res.json("Product Added");
     })
     .catch((err) => res.status(400).json("Error " + err));
 });
 
-router.route("/update/:id").put((req, res) => {
-  Product.findById(req.params.id)
+router.put("/update/:id", verify, (req, res) => {
+  const user = jwt.verify(req.header("auth-token"), process.env.TOKEN_SECRET);
+
+  Product.findOne({ _id: req.params.id, userId: user.userId })
     .then((product) => {
       const { productId, productName, quantity } = req.body;
 
@@ -47,23 +63,33 @@ router.route("/update/:id").put((req, res) => {
     })
     .then(() => {
       const { productName } = req.body;
-      const newHistory = new History({ productName, updateType: "updated" });
+      const newHistory = new History({
+        userId: user.userId,
+        productName,
+        updateType: "updated",
+      });
       newHistory.save();
       res.json("Product Updated");
     })
     .catch((err) => res.status(400).json("Error " + err));
 });
 
-router.route("/delete/:id").delete((req, res) => {
+router.delete("/delete/:id", verify, (req, res) => {
+  const user = jwt.verify(req.header("auth-token"), process.env.TOKEN_SECRET);
   let productName = null;
+
   Product.findById(req.params.id)
     .then((product) => {
       productName = product.productName;
-      return Product.deleteOne({ _id: req.params.id });
+      return Product.deleteOne({ _id: req.params.id, userId: user.userId });
     })
     .then(() => {
       if (productName) {
-        const newHistory = new History({ productName, updateType: "deleted" });
+        const newHistory = new History({
+          userId: user.userId,
+          productName,
+          updateType: "deleted",
+        });
         newHistory.save();
       }
 

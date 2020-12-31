@@ -2,13 +2,12 @@
 import MenuItem from "./MenuItem";
 
 // Styles
-import styles from "./NavigationMenu.module.scss";
+import styles from "./styles/NavigationMenu.module.scss";
 
-import inventoryIcon from "../assets/inventory-icon.svg";
-import historyIcon from "../assets/history-icon.svg";
-import logoutIcon from "../assets/logout-icon.svg";
+// Utilities
+import { historyIcon, inventoryIcon, logoutIcon } from "../../../assets/";
 
-export default function NavigationMenu() {
+export default function NavigationMenu({ logOut }) {
   return (
     <nav className={styles.nav}>
       <div>
@@ -20,7 +19,7 @@ export default function NavigationMenu() {
         </MenuItem>
       </div>
 
-      <div className={styles.logout}>
+      <div onClick={logOut} className={styles.logout}>
         <p>Logout</p>
         <img src={logoutIcon} alt="logoutIcon" />
       </div>

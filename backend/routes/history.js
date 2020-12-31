@@ -1,9 +1,13 @@
 const router = require("express").Router();
+var jwt = require("jsonwebtoken");
 
 let History = require("../models/history.model");
+const verify = require("../verifyToken");
 
-router.route("/").get((req, res) => {
-  History.find()
+router.get("/", verify, (req, res) => {
+  const user = jwt.verify(req.header("auth-token"), process.env.TOKEN_SECRET);
+
+  History.find({ userId: user.userId })
     .sort("date")
     .then((histories) => {
       res.json(histories);

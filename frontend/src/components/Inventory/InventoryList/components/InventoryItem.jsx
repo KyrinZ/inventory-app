@@ -1,9 +1,10 @@
 import { useState } from "react";
 
 // Styles
-import styles from "./InventoryItem.module.scss";
+import styles from "./styles/InventoryItem.module.scss";
 
-import instance from "./axios";
+// Utilities
+import { axios } from "../../../utilities/";
 
 export default function InventoryItem({
   _id,
@@ -17,7 +18,7 @@ export default function InventoryItem({
   const [stateQuantity, setStateQuantity] = useState(quantity);
 
   const deleteProduct = () => {
-    instance
+    axios
       .delete(`product/delete/${_id}/`)
       .then(() => {
         loadProducts();
@@ -26,7 +27,7 @@ export default function InventoryItem({
   };
 
   const updateQuantity = (count = 0) => {
-    instance
+    axios
       .put(`product/update/${_id}/`, {
         productId,
         productName,

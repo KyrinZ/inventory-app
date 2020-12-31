@@ -1,7 +1,7 @@
 // Styles
-import styles from "./HistoryItem.module.scss";
+import styles from "./styles/HistoryItem.module.scss";
 
-import historyIcon from "../assets/history-icon.svg";
+import historyIcon from "../../../assets/history-icon.svg";
 
 export default function HistoryItem({ children }) {
   return (

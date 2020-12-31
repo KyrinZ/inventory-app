@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // Styles
-import styles from "./Search.module.scss";
+import styles from "./styles/Search.module.scss";
 
 export default function Search({ loadProducts }) {
   const [search, setSearch] = useState("");

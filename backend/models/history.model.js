@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const historySchema = new Schema(
   {
+    userId: { type: String, required: true },
     productName: { type: String, required: true },
     updateType: { type: String, enum: ["added", "updated", "deleted"] },
     date: { type: Date, default: Date.now },

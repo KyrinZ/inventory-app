@@ -3,29 +3,39 @@ import { useFormik } from "formik";
 // Styles
 import styles from "./AuthenticationForm.module.scss";
 
-import { signUpSchema } from "./authentication_schema";
+// Utilities
+import { axios, signInSchema } from "../../utilities/";
 
-export default function SignUpForm({ changeFormType }) {
+export default function SignInForm({ changeFormType, logIn }) {
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
-      confirmation: "",
     },
-    validationSchema: signUpSchema,
+    validationSchema: signInSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      const { username, password } = values;
+      axios
+        .post("user/signin/", { username, password })
+        .then((res) => {
+          localStorage.setItem("auth-token", res.data.token);
+          axios.defaults.headers["auth-token"] = res.data.token;
+          logIn();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   });
 
-  const switchToSignIn = () => {
-    changeFormType("signIn");
+  const switchToSignUp = () => {
+    changeFormType("signUp");
   };
 
   return (
     <form className={styles.form} onSubmit={formik.handleSubmit}>
       <div>
-        <h1>Sign up</h1>
+        <h1>Sign in</h1>
       </div>
 
       <div className={styles.formGroup}>
@@ -57,26 +67,10 @@ export default function SignUpForm({ changeFormType }) {
           <div className={styles.errorMsg}>{formik.errors.password}</div>
         ) : null}
       </div>
-
-      <div className={styles.formGroup}>
-        <label htmlFor="confirmation">Confirm Password</label>
-        <input
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.confirmation}
-          name="confirmation"
-          type="password"
-        />
-
-        {formik.touched.confirmation && formik.errors.confirmation ? (
-          <div className={styles.errorMsg}>{formik.errors.confirmation}</div>
-        ) : null}
-      </div>
-      <button>Sign up</button>
+      <button type="submit">Sign in</button>
 
       <p>
-        Already have an account?{" "}
-        <strong onClick={switchToSignIn}>Sign in</strong>
+        Don't have an account? <strong onClick={switchToSignUp}>Sign up</strong>
       </p>
     </form>
   );

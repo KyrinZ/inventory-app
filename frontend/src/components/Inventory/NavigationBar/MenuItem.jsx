@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 
-import styles from "./MenuItem.module.scss";
+import styles from "./styles/MenuItem.module.scss";
 
 export default function MenuItem({ children, image, alt, path = "/" }) {
   let history = useHistory();
