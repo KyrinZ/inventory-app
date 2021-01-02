@@ -1,3 +1,4 @@
+import { BrowserRouter as Router } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Components
@@ -49,12 +50,12 @@ export default function EntryPoint() {
   }, [setUserData]);
 
   return (
-    <>
+    <Router>
       {userData.isUserLoggedIn ? (
         <InventoryPage logOut={logOut} />
       ) : (
         <AuthenticationPage logIn={logIn} />
       )}
-    </>
+    </Router>
   );
 }

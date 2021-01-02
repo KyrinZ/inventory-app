@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import { useHistory } from "react-router-dom";
 
 // Styles
 import styles from "./AuthenticationForm.module.scss";
@@ -7,6 +8,8 @@ import styles from "./AuthenticationForm.module.scss";
 import { axios, signInSchema } from "../../utilities/";
 
 export default function SignInForm({ changeFormType, logIn }) {
+  let history = useHistory();
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -20,6 +23,7 @@ export default function SignInForm({ changeFormType, logIn }) {
         .then((res) => {
           localStorage.setItem("auth-token", res.data.token);
           axios.defaults.headers["auth-token"] = res.data.token;
+          history.push("/inventory");
           logIn();
         })
         .catch((err) => {

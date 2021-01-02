@@ -1,3 +1,4 @@
+@import "../../../../utilities/scss-utilities/variables";
 .productContianer {
   width: 100%;
   margin: 0.5rem 0;
@@ -5,8 +6,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #d7d7d7;
-  color: #717171;
+  background-color: #c7ebbb;
+  color: $secondary-color;
 }
 
 .quantity {
@@ -19,8 +20,8 @@
     font-weight: bold;
 
     &:hover {
-      background-color: #bebebe;
-      color: rgb(71, 71, 71);
+      color: #28361a;
+      background-color: #64a74c;
     }
   }
   p {
@@ -30,6 +31,6 @@
 }
 
 .add {
-  background-color: #888888;
+  background-color: $primary-color;
   color: white;
 }

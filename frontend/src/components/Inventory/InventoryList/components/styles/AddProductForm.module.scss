@@ -1,3 +1,5 @@
+@import "../../../../utilities/scss-utilities/variables";
+
 .formContainer {
   position: fixed;
   top: 0;
@@ -8,7 +10,7 @@
 }
 
 .form {
-  background-color: rgb(224, 224, 224);
+  background-color: rgb(255, 255, 255);
   padding: 1rem;
   position: absolute;
   top: 50%;
@@ -23,7 +25,7 @@
     margin-top: 4rem;
   }
   h1 {
-    color: #474747;
+    color: $secondary-color;
     font-weight: normal;
   }
   button {
@@ -32,10 +34,10 @@
     padding: 1rem;
     font-weight: bold;
     color: #ffffff;
-    background-color: #6d6d6d;
+    background-color: $primary-color;
     &:hover {
-      color: #d6d6d6;
-      background-color: #8d8d8d;
+      color: #28361a;
+      background-color: #64a74c;
     }
   }
   p {
@@ -52,12 +54,12 @@
 .formGroup {
   margin: 1rem 0;
   label {
-    color: #9e9e9e;
+    color: $secondary-color;
     margin-left: 1rem;
   }
   input {
     padding: 1rem;
-    background-color: #ededed;
+    background-color: #e5f6df;
     border: none;
   }
 }

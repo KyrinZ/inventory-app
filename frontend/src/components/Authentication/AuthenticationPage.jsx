@@ -7,7 +7,8 @@ import { SignInForm, SignUpForm } from "./Forms";
 import styles from "./AuthenticationPage.module.scss";
 
 // Utilities
-import { warehouseImg } from "../../assets";
+import { sideImage } from "../../assets";
+import { logo } from "../../assets/";
 
 export default function Authentication({ logIn }) {
   const [formType, setFormType] = useState("signUp");
@@ -21,7 +22,7 @@ export default function Authentication({ logIn }) {
         <div className={styles.formInner}>
           {/* Logo */}
           <div className={styles.logo}>
-            <img alt="Logo" />
+            <img src={logo} alt="Logo" />
           </div>
 
           {/* Forms */}
@@ -34,7 +35,7 @@ export default function Authentication({ logIn }) {
       </div>
       {/* Side Image */}
       <div className={styles.imageSide}>
-        <img src={warehouseImg} alt="Warehouse" />
+        <img src={sideImage} alt="sideImage" />
       </div>
     </div>
   );

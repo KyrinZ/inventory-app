@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+
 // Component
 import MenuItem from "./MenuItem";
 
@@ -8,6 +10,7 @@ import styles from "./styles/NavigationMenu.module.scss";
 import { historyIcon, inventoryIcon, logoutIcon } from "../../../assets/";
 
 export default function NavigationMenu({ logOut }) {
+  let history = useHistory();
   return (
     <nav className={styles.nav}>
       <div>
@@ -19,7 +22,13 @@ export default function NavigationMenu({ logOut }) {
         </MenuItem>
       </div>
 
-      <div onClick={logOut} className={styles.logout}>
+      <div
+        onClick={() => {
+          history.push("/");
+          logOut();
+        }}
+        className={styles.logout}
+      >
         <p>Logout</p>
         <img src={logoutIcon} alt="logoutIcon" />
       </div>
