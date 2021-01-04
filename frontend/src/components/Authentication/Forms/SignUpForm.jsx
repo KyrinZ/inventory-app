@@ -1,14 +1,16 @@
+import { useContext } from "react";
 import { useFormik } from "formik";
-import { useHistory } from "react-router-dom";
 
 // Styles
 import styles from "./AuthenticationForm.module.scss";
 
 // Utilities
 import { axios, signUpSchema } from "../../utilities/";
+import { UserContext } from "../../EntryPoint";
 
 export default function SignUpForm({ changeFormType, logIn }) {
-  let history = useHistory();
+  const userObject = useContext(UserContext);
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -22,9 +24,7 @@ export default function SignUpForm({ changeFormType, logIn }) {
         .post("user/signup/", { username, password })
         .then((res) => {
           localStorage.setItem("auth-token", res.data.token);
-          axios.defaults.headers["auth-token"] = res.data.token;
-          history.push("/inventory");
-          logIn();
+          userObject.authenticateUser();
         })
         .catch((err) => {
           console.log(err);

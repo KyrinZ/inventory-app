@@ -47,4 +47,22 @@ router.post("/signin", async (req, res) => {
   res.header("auth-token", token).send({ token: token });
 });
 
+router.post("/verify", async (req, res) => {
+  const { token } = req.body;
+
+  let userId;
+  try {
+    const result = jwt.verify(token, process.env.TOKEN_SECRET);
+    userId = result.userId;
+  } catch (error) {
+    userId = null;
+  }
+
+  if (!userId) return res.status(400).send("token is invalid");
+  const user = await User.findOne({ _id: userId });
+  if (!user) return res.status(400).send("username does not exist");
+
+  res.send({ userId: user._id, username: user.username, token: token });
+});
+
 module.exports = router;

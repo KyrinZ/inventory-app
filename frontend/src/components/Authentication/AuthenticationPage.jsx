@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 // Components
 import { SignInForm, SignUpForm } from "./Forms";
@@ -9,6 +9,7 @@ import styles from "./AuthenticationPage.module.scss";
 // Utilities
 import { sideImage } from "../../assets";
 import { logo } from "../../assets/";
+import { UserContext } from "../EntryPoint";
 
 export default function Authentication({ logIn }) {
   const [formType, setFormType] = useState("signUp");
@@ -16,6 +17,9 @@ export default function Authentication({ logIn }) {
   const changeFormType = (type) => {
     setFormType(type);
   };
+
+  const userObject = useContext(UserContext);
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.formSide}>
@@ -27,9 +31,15 @@ export default function Authentication({ logIn }) {
 
           {/* Forms */}
           {formType === "signIn" ? (
-            <SignInForm logIn={logIn} changeFormType={changeFormType} />
+            <SignInForm
+              logIn={userObject.logIn}
+              changeFormType={changeFormType}
+            />
           ) : formType === "signUp" ? (
-            <SignUpForm logIn={logIn} changeFormType={changeFormType} />
+            <SignUpForm
+              logIn={userObject.logIn}
+              changeFormType={changeFormType}
+            />
           ) : null}
         </div>
       </div>

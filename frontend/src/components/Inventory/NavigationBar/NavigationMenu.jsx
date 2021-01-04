@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 // Component
@@ -8,9 +9,16 @@ import styles from "./styles/NavigationMenu.module.scss";
 
 // Utilities
 import { historyIcon, inventoryIcon, logoutIcon } from "../../../assets/";
+import { UserContext } from "../../EntryPoint";
 
-export default function NavigationMenu({ logOut }) {
-  let history = useHistory();
+export default function NavigationMenu() {
+  const userObject = useContext(UserContext);
+
+  const logOut = () => {
+    localStorage.removeItem("auth-token");
+    userObject.authenticateUser();
+  };
+
   return (
     <nav className={styles.nav}>
       <div>
@@ -24,7 +32,6 @@ export default function NavigationMenu({ logOut }) {
 
       <div
         onClick={() => {
-          history.push("/");
           logOut();
         }}
         className={styles.logout}

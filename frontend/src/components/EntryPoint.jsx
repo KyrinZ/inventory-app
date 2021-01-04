@@ -1,61 +1,79 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
 // Components
-import InventoryPage from "./Inventory/InventoryPage";
-import AuthenticationPage from "./Authentication/AuthenticationPage";
+import Inventory from "./Inventory/InventoryList/Inventory";
+import History from "./Inventory/HistoryList/History";
+import PrivateRoute from "./CustomRoutes/PrivateRoute";
+import AuthRoute from "./CustomRoutes/AuthRoute";
+import NavigationMenu from "./Inventory/NavigationBar/NavigationMenu";
 
 // Utilities
 import { axios } from "./utilities";
 
+export const UserContext = React.createContext();
+
 export default function EntryPoint() {
-  const [userData, setUserData] = useState({
-    userId: 2,
-    username: "TestUser",
+  const [userData, SetUserData] = useState({
+    userId: null,
+    username: null,
     isUserLoggedIn: false,
+    dataArrived: false,
   });
 
-  const logIn = () => {
-    setUserData({
-      userId: 2,
-      username: "TestUser",
-      isUserLoggedIn: true,
-    });
+  const authenticateUser = async () => {
+    try {
+      const response = await axios.post("user/verify/", {
+        token: localStorage.getItem("auth-token"),
+      });
+
+      if (response.status === 200) {
+        localStorage.setItem("auth-token", response.data.token);
+        axios.defaults.headers["auth-token"] = response.data.token;
+        const { userId, username } = response.data;
+        SetUserData({
+          userId,
+          username,
+          isUserLoggedIn: true,
+          dataArrived: true,
+        });
+      }
+    } catch (error) {
+      localStorage.removeItem("auth-token");
+      SetUserData({
+        userId: null,
+        username: null,
+        isUserLoggedIn: false,
+        dataArrived: true,
+      });
+    }
   };
-  const logOut = () => {
-    localStorage.removeItem("auth-token");
-    setUserData({
-      userId: 2,
-      username: "TestUser",
-      isUserLoggedIn: false,
-    });
+
+  const userObject = {
+    userData,
+    authenticateUser,
   };
 
   useEffect(() => {
-    axios.defaults.headers["auth-token"] = null;
-    const token = localStorage.getItem("auth-token");
-    if (token) {
-      setUserData({
-        userId: 2,
-        username: "TestUser",
-        isUserLoggedIn: true,
-      });
-    } else {
-      setUserData({
-        userId: 2,
-        username: "TestUser",
-        isUserLoggedIn: false,
-      });
-    }
-  }, [setUserData]);
-
+    authenticateUser();
+  }, []);
   return (
-    <Router>
-      {userData.isUserLoggedIn ? (
-        <InventoryPage logOut={logOut} />
+    <UserContext.Provider value={userObject}>
+      {userData.dataArrived ? (
+        <>
+          {userData.isUserLoggedIn ? <NavigationMenu /> : null}
+          <Switch>
+            <AuthRoute exact path="/auth" />
+
+            <PrivateRoute exact path="/inventory" component={<Inventory />} />
+            <PrivateRoute exact path="/history" component={<History />} />
+
+            <Route path="/" render={() => <Redirect exact to="/auth" />} />
+          </Switch>
+        </>
       ) : (
-        <AuthenticationPage logIn={logIn} />
+        "Loading"
       )}
-    </Router>
+    </UserContext.Provider>
   );
 }

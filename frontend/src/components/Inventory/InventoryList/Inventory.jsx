@@ -1,15 +1,19 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // Components
-import { AddProductForm, InventoryItem, Search } from "./components";
+import {
+  AddProductForm,
+  InventoryItem,
+  Search,
+  DownloadReport,
+} from "./components";
 
 // Styles
 import styles from "./Inventory.module.scss";
 
 // Utilities
 import { axios } from "../../utilities";
-
-const username = "TestUser";
+import { UserContext } from "../../EntryPoint";
 
 export default function Inventory() {
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
@@ -17,24 +21,23 @@ export default function Inventory() {
     isItemsArrived: false,
     items: [],
   });
+  const { userData } = useContext(UserContext);
 
-  const loadProducts = useCallback((search = "") => {
-    axios
-      .get(`product/?search=${search}`)
-      .then(({ data }) => {
-        setProductItems({ isItemsArrived: true, items: data });
-      })
-      .catch((err) => {
-        setProductItems({ isItemsArrived: true, items: [] });
-      });
-  }, []);
+  const loadProducts = async (search = "") => {
+    try {
+      const response = await axios.get(`product/?search=${search}`);
+      setProductItems({ isItemsArrived: true, items: response.data });
+    } catch (error) {
+      setProductItems({ isItemsArrived: true, items: [] });
+    }
+  };
 
   useEffect(() => {
     loadProducts();
-  }, [loadProducts]);
+  }, []);
 
   return (
-    <div>
+    <div style={{ marginLeft: "10rem" }}>
       {isAddFormOpen ? (
         <AddProductForm
           loadProducts={loadProducts}
@@ -45,7 +48,7 @@ export default function Inventory() {
       <div className={styles.headingContainer}>
         {/* Title */}
         <div>
-          <h1>{username}'s inventory</h1>
+          <h1>{userData.username}'s inventory</h1>
         </div>
 
         {/* Search */}
@@ -54,7 +57,7 @@ export default function Inventory() {
 
       <div className={styles.buttons}>
         <button onClick={() => setIsAddFormOpen(true)}>Add Item</button>
-        <button>Download Report</button>
+        <DownloadReport items={productItems.items} />
       </div>
 
       <div className={styles.productsContainer}>

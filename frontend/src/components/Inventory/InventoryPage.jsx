@@ -8,14 +8,13 @@ import NavigationMenu from "./NavigationBar/NavigationMenu";
 // Styles
 import styles from "./InventoryPage.module.scss";
 
-export default function InventoryPage({ logOut }) {
+export default function InventoryPage({ logOut, userData }) {
   return (
     <>
-      <NavigationMenu logOut={logOut} />
       <div className={styles.container}>
         <Switch>
           <Route exact path="/inventory" component={Inventory} />
-          <Route exact path="/history" component={History} />
+          <Route exact path="/inventory/history" component={History} />
         </Switch>
       </div>
     </>

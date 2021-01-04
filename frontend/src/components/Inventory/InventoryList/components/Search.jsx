@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Styles
 import styles from "./styles/Search.module.scss";
@@ -6,13 +6,12 @@ import styles from "./styles/Search.module.scss";
 export default function Search({ loadProducts }) {
   const [search, setSearch] = useState("");
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
+  const handleSearchChange = async (event) => {
+    setSearch((prevValue) => {
+      loadProducts(event.target.value);
+      return event.target.value;
+    });
   };
-
-  useEffect(() => {
-    loadProducts(search);
-  }, [search, loadProducts]);
 
   return (
     <div className={styles.search}>
