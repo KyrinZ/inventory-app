@@ -49,10 +49,10 @@ export default function Authentication({ logIn }) {
           <img src={illustrationBox} alt="illustrationBox" />
         </div>
         <div className={styles.text}>
-          <h1>Manage your items</h1>
+          <h1>Manage your inventory</h1>
           <h2>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est nunc,
-            ligula ipsum placerat.
+            Simple way to ease your life by organizing all your items and keep
+            tabs of their quantity
           </h2>
         </div>
       </div>
