@@ -56,13 +56,16 @@ export default function InventoryItem({
           </button>
           <p>{stateQuantity}</p>
           <button
+            className={styles.subtract}
             onClick={() => {
               updateQuantity(-1);
             }}
           >
             -
           </button>
-          <button onClick={deleteProduct}>Delete</button>
+          <button className={styles.delete} onClick={deleteProduct}>
+            Delete
+          </button>
         </div>
       </td>
     </tr>

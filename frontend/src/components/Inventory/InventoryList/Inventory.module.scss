@@ -31,11 +31,14 @@
   }
 }
 
-.productsContainer {
+.outerTable {
+  min-height: 70vh;
   background-color: #eefbea;
   margin: 1rem auto;
-  min-height: 60vh;
-  width: 90%;
+  width: 100%;
+}
+.productsContainer {
+  width: 100%;
   thead {
     background-color: $secondary-color;
     color: white;
