@@ -7,7 +7,7 @@ import { SignInForm, SignUpForm } from "./Forms";
 import styles from "./AuthenticationPage.module.scss";
 
 // Utilities
-import { sideImage } from "../../assets";
+import { illustrationBox } from "../../assets";
 import { logo } from "../../assets/";
 import { UserContext } from "../EntryPoint";
 
@@ -45,7 +45,16 @@ export default function Authentication({ logIn }) {
       </div>
       {/* Side Image */}
       <div className={styles.imageSide}>
-        <img src={sideImage} alt="sideImage" />
+        <div className={styles.illustration}>
+          <img src={illustrationBox} alt="illustrationBox" />
+        </div>
+        <div className={styles.text}>
+          <h1>Manage your items</h1>
+          <h2>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est nunc,
+            ligula ipsum placerat.
+          </h2>
+        </div>
       </div>
     </div>
   );

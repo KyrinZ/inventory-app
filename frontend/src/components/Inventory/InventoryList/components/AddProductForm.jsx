@@ -44,6 +44,7 @@ export default function AddProductForm({ setIsAddFormOpen, loadProducts }) {
         <div className={styles.heading}>
           <h1>Add Item</h1>
           <p
+            className={styles.close}
             onClick={(e) => {
               setIsAddFormOpen(false);
             }}

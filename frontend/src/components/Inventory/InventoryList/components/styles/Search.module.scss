@@ -1,3 +1,4 @@
+@import "../../../../utilities/scss-utilities//variables";
 .search {
   margin: 0 1rem;
   input {
@@ -6,5 +7,15 @@
     border: none;
     border-bottom: 5px solid #184409;
     padding: 1rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .search {
+    margin-bottom: 2rem;
+    width: 100%;
+    input {
+      width: 100%;
+    }
   }
 }

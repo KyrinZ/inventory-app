@@ -50,6 +50,14 @@
   align-items: center;
   width: 100%;
 }
+.close {
+  color: white;
+  background-color: rgb(245, 80, 80);
+  padding: 0.5rem;
+  &:hover {
+    background-color: rgb(250, 123, 123);
+  }
+}
 
 .formGroup {
   margin: 1rem 0;
@@ -68,4 +76,10 @@
   margin: 0.5rem 0;
   font-size: 0.8rem;
   color: #ee4e4e;
+}
+
+@media (max-width: 800px) {
+  .form {
+    width: 80%;
+  }
 }

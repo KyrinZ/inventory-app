@@ -37,7 +37,7 @@ export default function Inventory() {
   }, []);
 
   return (
-    <div style={{ marginLeft: "10rem" }}>
+    <div className={styles.container}>
       {isAddFormOpen ? (
         <AddProductForm
           loadProducts={loadProducts}
@@ -60,41 +60,48 @@ export default function Inventory() {
         <DownloadReport items={productItems.items} />
       </div>
 
-      <div className={styles.productsContainer}>
-        {/* Table Head */}
-        <div className={styles.productsHeading}>
-          <div>
-            <div>No.</div>
-          </div>
-          <div>
-            <div>Product id</div>
-          </div>
-          <div>
-            <div>Product name</div>
-          </div>
-          <div>
-            <div>Date added</div>
-          </div>
-          <div>
-            <div>Quantity</div>
-          </div>
-        </div>
-        {productItems.isItemsArrived ? (
-          productItems.items.length > 0 ? (
-            productItems.items.map((items, index) => (
-              <InventoryItem
-                key={index}
-                productNumber={index + 1}
-                loadProducts={loadProducts}
-                {...items}
-              />
-            ))
-          ) : (
-            <p>No items added</p>
-          )
-        ) : (
-          <p>Loading</p>
-        )}
+      <div className={styles.outerTable}>
+        <table className={styles.productsContainer}>
+          {/* Table Head */}
+          <thead className={styles.productsHeading}>
+            <tr>
+              <th>
+                <p>No.</p>
+              </th>
+              <th>
+                <p>Product id</p>
+              </th>
+              <th>
+                <p>Product name</p>
+              </th>
+              <th>
+                <p>Quantity</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {productItems.isItemsArrived ? (
+              productItems.items.length > 0 ? (
+                productItems.items.map((items, index) => (
+                  <InventoryItem
+                    key={index}
+                    productNumber={index + 1}
+                    loadProducts={loadProducts}
+                    {...items}
+                  />
+                ))
+              ) : (
+                <tr>
+                  <td>No items added</td>
+                </tr>
+              )
+            ) : (
+              <tr>
+                <td>Loading</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

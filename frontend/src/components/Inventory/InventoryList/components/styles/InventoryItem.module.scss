@@ -1,17 +1,17 @@
 @import "../../../../utilities/scss-utilities/variables";
 .productContianer {
-  width: 100%;
   margin: 0.5rem 0;
   padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background-color: #c7ebbb;
   color: $secondary-color;
+}
+.serialNumber {
+  font-weight: bold;
 }
 
 .quantity {
   display: flex;
+  justify-content: center;
   align-items: center;
   button {
     padding: 1rem;

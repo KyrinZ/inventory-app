@@ -40,30 +40,31 @@ export default function InventoryItem({
   };
 
   return (
-    <div className={styles.productContianer}>
-      <div>{productNumber}</div>
-      <div>{productId}</div>
-      <div>{productName}</div>
-      <div>{dateAdded}</div>
-      <div className={styles.quantity}>
-        <button
-          onClick={() => {
-            updateQuantity(1);
-          }}
-          className={styles.add}
-        >
-          +
-        </button>
-        <p>{stateQuantity}</p>
-        <button
-          onClick={() => {
-            updateQuantity(-1);
-          }}
-        >
-          -
-        </button>
-        <button onClick={deleteProduct}>Delete</button>
-      </div>
-    </div>
+    <tr className={styles.productContianer}>
+      <td className={styles.serialNumber}>{productNumber}</td>
+      <td>{productId}</td>
+      <td>{productName}</td>
+      <td>
+        <div className={styles.quantity}>
+          <button
+            onClick={() => {
+              updateQuantity(1);
+            }}
+            className={styles.add}
+          >
+            +
+          </button>
+          <p>{stateQuantity}</p>
+          <button
+            onClick={() => {
+              updateQuantity(-1);
+            }}
+          >
+            -
+          </button>
+          <button onClick={deleteProduct}>Delete</button>
+        </div>
+      </td>
+    </tr>
   );
 }
