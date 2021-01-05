@@ -27,8 +27,8 @@ app.use("/product", productRoute);
 app.use("/history", historyRoute);
 app.use("/user", userRoute);
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
 app.listen(port, () => {
