@@ -1,0 +1,22 @@
+@import "../../../utilities/scss-utilities/variables";
+
+.historyItemContainer {
+  width: 100%;
+  background-color: #f1ffed;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  p {
+    color: $secondary-color;
+    margin: 0 1rem;
+  }
+}
+
+.icon {
+  background-color: #7dbf66;
+  padding: 1rem;
+  max-width: 4rem;
+  img {
+    width: 100%;
+  }
+}
